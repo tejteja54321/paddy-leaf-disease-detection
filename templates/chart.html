@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Basic -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Mobile Metas -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>PADDY LEAF DISEASE</title>
+
+    <!-- slider stylesheet -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+    <!-- bootstrap core css -->
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap.css" />
+
+    <!-- fonts style -->
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="../static/input.css" rel="stylesheet" />
+    <!-- responsive style -->
+    <link href="../static/responsive.css" rel="stylesheet" />
+
+    <style>
+        .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item .nav-link::after {
+            display: none;
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 3px;
+            border-radius: 5px;
+            background-color: #3fff2d;
+        }
+
+        .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item.active a::after,
+        .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item:hover a::after {
+            display: block;
+            background-color: #00b109;
+        }
+
+        .trainer_section {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+        }
+
+        .chart-section {
+            text-align: center;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            width: 80%;
+            margin: auto;
+            margin-bottom: 40px; /* Add some space between charts */
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: black;
+        }
+
+        footer {
+            background-color: #f1f1f1;
+            padding: 20px 0;
+            text-align: center;
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="hero_area" style="background-image: url('static/images/p8.jpg');">
+        <!-- header section starts -->
+        <header class="header_section">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="/">
+                        <span>PADDY LEAF DISEASE</span>
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/input"> UPLOAD</a>
+                                </li>
+                                
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/performance"> PERFORMANCE</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/chart"> CHARTS<span class="sr-only">(current)</span></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/login"> LOGOUT</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+        <!-- end header section -->
+
+        <section class="trainer_section layout_padding chart-section">
+            <div class="container">
+                <h2>Disease Distribution</h2>
+                <div class="chart-container">
+                    <canvas id="diseaseChart"></canvas>
+                </div>
+                <h2>Another Chart Example</h2>
+                <div class="chart-container">
+                    <canvas id="secondChart"></canvas>
+                </div>
+                <h2>Additional Visualization</h2>
+                <div class="chart-container">
+                    <canvas id="thirdChart"></canvas>
+                </div>
+            </div>
+        </section>
+        <!-- end trainer section -->
+
+        <!-- footer section -->
+        <footer class="container-fluid footer_section" style="background-image: url('static/images/p1.jpg');">
+          <p>
+            &copy; 2024 All Rights Reserved.
+            <a href="https://html.design/">Paddy Leaf Disease</a>
+          </p>
+        </footer>
+        <!-- footer section -->
+
+        <script>
+            // Fetch data for the first chart
+            fetch('/data') // Replace with your data endpoint
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const ctx = document.getElementById('diseaseChart').getContext('2d');
+                    const diseaseChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Training',
+                                data: data.training,
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgba(255, 99, 132, 1)',
+                                borderWidth: 1
+                            }, {
+                                label: 'Augmented',
+                                data: data.augmented,
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgba(54, 162, 235, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // For the second chart, we can use the same data structure
+                    const ctx2 = document.getElementById('secondChart').getContext('2d');
+                    const secondChart = new Chart(ctx2, {
+                        type: 'line', // You can change this to 'bar' or other types as needed
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Training Line',
+                                data: data.training,
+                                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                borderColor: 'rgba(255, 206, 86, 1)',
+                                borderWidth: 1
+                            }, {
+                                label: 'Augmented Line',
+                                data: data.augmented,
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgba(75, 192, 192, 1)',
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            scales: {
+                                y: {
+                                    beginAtZero: true
+                                }
+                            }
+                        }
+                    });
+
+                    // For the third chart, you can create a different visualization if needed
+                    const ctx3 = document.getElementById('thirdChart').getContext('2d');
+                    const thirdChart = new Chart(ctx3, {
+                        type: 'pie', // Change this to the desired type
+                        data: {
+                            labels: data.labels,
+                            datasets: [{
+                                label: 'Distribution',
+                                data: data.training, // You can modify this to use different data if needed
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                legend: {
+                                    position: 'top',
+                                },
+                                title: {
+                                    display: true,
+                                    text: 'Distribution of Diseases'
+                                }
+                            }
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching data for the first chart:', error));
+        </script>
+
+        <script src="../static/jquery-3.4.1.min.js"></script>
+        <script src="../static/bootstrap.js"></script>
+    </body>
+
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+  <meta name="author" content="" />
+
+  <title>PADDY LEAF DISEASE</title>
+
+  <!-- slider stylesheet -->
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="../static/bootstrap.css" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600,700&display=swap" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link href="../static/input.css" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="../static/responsive.css" rel="stylesheet" />
+  <style>
+    .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item .nav-link::after {
+      display: none;
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 3px;
+      border-radius: 5px;
+      background-color: #3fff2d;
+    }
+
+    .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item.active a::after,
+    .custom_nav-container.navbar-expand-lg .navbar-nav .nav-item:hover a::after {
+      display: block;
+      background-color: #00b109;
+    }
+
+    .us_section .box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: 30px; /* Adds space between rows if needed */
+    }
+
+    .us_section .img-box img {
+      width: 100%;
+      max-width: 150px; /* Adjust size as needed */
+      height: auto;
+    }
+
+    .us_section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    height: 100vh; /* Full viewport height */
+    position: relative;
+}
+
+.content {
+    text-align: center;
+    animation: fadeIn 1s ease-in-out; /* Animation for content */
+}
+
+.disease-image {
+    width: 50%; /* Adjust the width of the image */
+    height: auto; /* Maintain aspect ratio */
+    margin-top: 20px;
+}
+
+h1 {
+    font-size: 2em; /* Increase text size */
+    color: black;
+}
+
+p {
+    font-size: 1.2em; /* Description text size */
+    margin-top: 10px;
+    color: black;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+  </style>
+</head>
+
+<body>
+  <div class="hero_area" style="background-image: url('static/images/p8.jpg');">
+    <!-- header section starts -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="/">
+            <span>
+              PADDY LEAF DISEASE
+            </span>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="d-flex ml-auto flex-column flex-lg-row align-items-center">
+              <ul class="navbar-nav  ">
+                <li class="nav-item">
+                  <a class="nav-link" href="/input"> UPLOAD</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/result"> RESULT<span class="sr-only">(current)</span></a>
+                  </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="/performance"> PERFORMANCE</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="/charts"> CHARTS</a>
+                </li>
+                <li class="nav-item ">
+                  <a class="nav-link" href="/login"> LOGOUT</a>
+                </li>
+              </ul>
+              <div class="user_option">
+                <form class="form-inline my-2 my-lg-0 ml-0 ml-lg-4 mb-3 mb-lg-0">
+                </form>
+              </div>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+
+    
+    <section class="us_section" style="background-image: url('static/images/p2.jpg');">
+
+      {% if prediction == 0 %}
+      <div class="content" >
+          <h1>Brown Spot</h1>
+          <p>Yellowing leaves, nutrient deficiency stress</p>
+          <img src="{{ filepath }}" alt="image" class="disease-image">
+      </div>
+  
+      {% elif prediction == 1 %}
+      <div class="content" >
+          <h1>Healthy Leaf</h1>
+          <p>Vibrant leaves, strong plant growth.</p>
+          <img src="{{ filepath }}" alt="image" class="disease-image">
+      </div>
+      
+      {% elif prediction == 2 %}
+      <div class="content" >
+          <h1>Leaf Blast</h1>
+          <p>Fungal infection causing significant damage.</p>
+          <img src="{{ filepath }}" alt="image" class="disease-image">
+      </div>
+      
+      {% elif prediction == 3 %}
+      <div class="content">
+          <h1>Leaf Blight</h1>
+          <p>Rapid decay, brown leaf spots..</p>
+          <img src="{{ filepath }}" alt="image" class="disease-image">
+      </div>
+      
+      {% else %}
+      <div class="content" >
+          <h1>Leaf Smut</h1>
+          <p>Dark masses, fungal infection present.</p>
+          <img src="{{ filepath }}" alt="image" class="disease-image">
+      </div>
+      {% endif %}
+  
+  </section>
+    <!-- end us section -->
+
+    <!-- footer section -->
+    <footer class="container-fluid footer_section" style="background-image: url('static/images/p1.jpg');">
+      <p>
+        &copy; 2024 All Rights Reserved.
+        <a href="https://html.design/">Paddy Leaf Disease</a>
+      </p>
+    </footer>
+    <!-- footer section -->
+
+    <script src="../static/jquery-3.4.1.min.js"></script>
+    <script src="../static/bootstrap.js"></script>
+</body>
+
+</html>
